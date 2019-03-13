@@ -1,24 +1,23 @@
-#!/bin/sh
+#!/usr/bin/env sh
+
+styles_web=(black bold extralight light regular semibold blackitalic bolditalic extralightitalic lightitalic italic semibolditalic)
 
 # generate all the fonts
-doWebFormats subset
+doWebFormats.sh subset
 
-# move the EOTs
-mv subset/EOT/sourcesanspro-bold-webfont.eot    subset/sourcesanspro-bold-webfont.eot
-mv subset/EOT/sourcesanspro-italic-webfont.eot  subset/sourcesanspro-italic-webfont.eot
-mv subset/EOT/sourcesanspro-light-webfont.eot   subset/sourcesanspro-light-webfont.eot
-mv subset/EOT/sourcesanspro-regular-webfont.eot subset/sourcesanspro-regular-webfont.eot
+function move_and_rename {
+	# move the EOTs
+	mv subset/EOT/sourcesanspro-$1-webfont.eot subset/sourcesanspro-$1-webfont.eot
 
-# move & rename the WOFF(2)s
-mv subset/WOFF/TTF/sourcesanspro-bold-webfont.ttf.woff    subset/sourcesanspro-bold-webfont.woff
-mv subset/WOFF/TTF/sourcesanspro-italic-webfont.ttf.woff  subset/sourcesanspro-italic-webfont.woff
-mv subset/WOFF/TTF/sourcesanspro-light-webfont.ttf.woff   subset/sourcesanspro-light-webfont.woff
-mv subset/WOFF/TTF/sourcesanspro-regular-webfont.ttf.woff subset/sourcesanspro-regular-webfont.woff
+	# move & rename the WOFF(2)s
+	mv subset/WOFF/TTF/sourcesanspro-$1-webfont.ttf.woff subset/sourcesanspro-$1-webfont.woff
+	mv subset/WOFF2/TTF/sourcesanspro-$1-webfont.ttf.woff2 subset/sourcesanspro-$1-webfont.woff2
+}
 
-mv subset/WOFF2/TTF/sourcesanspro-bold-webfont.ttf.woff2    subset/sourcesanspro-bold-webfont.woff2
-mv subset/WOFF2/TTF/sourcesanspro-italic-webfont.ttf.woff2  subset/sourcesanspro-italic-webfont.woff2
-mv subset/WOFF2/TTF/sourcesanspro-light-webfont.ttf.woff2   subset/sourcesanspro-light-webfont.woff2
-mv subset/WOFF2/TTF/sourcesanspro-regular-webfont.ttf.woff2 subset/sourcesanspro-regular-webfont.woff2
+for s in ${styles_web[@]}
+do
+	move_and_rename $s
+done
 
 # delete directories
 rmdir subset/EOT

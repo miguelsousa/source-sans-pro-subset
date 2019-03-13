@@ -1,7 +1,14 @@
-#!/bin/sh
+#!/usr/bin/env sh
+
+styles=(Black Bold ExtraLight Light Regular Semibold BlackIt BoldIt ExtraLightIt LightIt It SemiboldIt)
 
 cd original
-curl -LO https://raw.github.com/adobe-fonts/source-sans-pro/release/TTF/SourceSansPro-Regular.ttf
-curl -LO https://raw.github.com/adobe-fonts/source-sans-pro/release/TTF/SourceSansPro-Bold.ttf
-curl -LO https://raw.github.com/adobe-fonts/source-sans-pro/release/TTF/SourceSansPro-It.ttf
-curl -LO https://raw.github.com/adobe-fonts/source-sans-pro/release/TTF/SourceSansPro-Light.ttf
+
+function fetch_fonts {
+	curl -LO https://raw.github.com/adobe-fonts/source-sans-pro/release/TTF/SourceSansPro-$1.ttf
+}
+
+for s in ${styles[@]}
+do
+	fetch_fonts $s
+done
